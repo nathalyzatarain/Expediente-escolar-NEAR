@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+
+  /*FLEXBOX DE LOS BUSCADORES */
+
+  .buscadores-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    justify-items: center;
+    /*height: 450px;*/
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .buscadores-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+
+    width: 20%;
+    
+  }
+
+  .margin-top-bottom {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  /* formato de form */
+
+  .input-text {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .form-crear-btn {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-crear-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .form-div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    /*width: 50%;*/
+  }
+
+
+  /* HEADER */
+
+  
+  
+  /* Header/Logo Title */
+  .header {
+    padding: 60px;
+    text-align: center;
+    background: #333;
+    color: white;
+    font-size: 30px;
+    font-family: Arial;
+    margin: 0;
+  }
+
+  .header>p{
+    font-size: 20px;
+    text-align: justify;
+  }
+
+  /* .container { 
+    overflow:auto; 
+    width: 100%; 
+  } 
+  
+  .buscadores-box, .form-div { 
+    width: 40%; 
+    
+    padding: 1em; 
+    background: white; 
+  } 
+  
+  .buscadores-box  { float:left;  }
+  .form-div { float:right; }  */
+
+
+  /*DIVISOR DE FLEX */
+
+  .container-flex {
+    display: flex;
+  }
+
+  .left-half {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .right-half {
+    flex: 1;
+    padding: 1rem;
+  }

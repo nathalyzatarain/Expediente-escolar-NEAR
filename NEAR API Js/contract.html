@@ -8,41 +8,72 @@
   <title>Expediente escolar</title>
   <script src="https://cdn.jsdelivr.net/npm/near-api-js@0.43.1/dist/near-api-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bn.js@5.2.0/lib/bn.min.js"></script>
+  <link rel="stylesheet" href="./src/css/styles.css">
 </head>
 
 <body>
-  <nav>
-    <div><a href="index.html">Inicio</a></div>
-    <div><a href="login.html">Login</a></div>
-    <div><a href="contract.html">contract</a></div>
-  </nav>
-  <hr />
-  <button id="hello">Hello World</button>
-  <br />
-  <button id="read">read</button> <input type="text" id="read-key" placeholder="key" />
-  <br />
-  <button id="write">write</button> <input type="text" id="write-key" placeholder="key" /> <input type="text"
-    id="write-value" placeholder="value" />
+  <div class="topnav">
+    <a class="active" href="index.html">Inicio</a>
+    <a href="contract.html">Contrato Inteligente</a>
+    <a href="login.html">Login</a>
+  </div>
 
   <!-- Expediente escolar  -->
-  <br><br>
-  <button id="studentList">Ver estudiantes</button>
-  <br />
-  <button id="readId">Consultar por Nº de cuenta</button> <input type="text" id="read-id" placeholder="# cuenta" />
-  <br />
-  <button id="readName">Consultar por nombre</button> <input type="text" id="read-name" placeholder="Nombre" />
-  <br />
-  <button id="readCareer">Consultar por carrera</button> <input type="text" id="read-career" placeholder="Carrera" />
-  <br />
-  <button id="addStudent">Agregar estudiante</button> 
-  <input type="number" id="id" placeholder="# Cuenta" /> 
-  <input type="text" id="name" placeholder="Nombre" /> 
-  <input type="date" id="date" placeholder="Fecha" />
-  <input type="number" id="age" placeholder="Edad" />
-  <input type="text" id="email" placeholder="Correo electronico" />
-  <input type="text" id="phone" placeholder="Telefono" />
-  <input type="text" id="country" placeholder="Nacionalidad" />
-  <input type="text" id="career" placeholder="Carrera" />
+
+  <div class="container-flex">
+  
+    <form class="form-div left-half">
+        <h1>Consultas</h1>
+
+        <label style="visibility: hidden;" for="readAll-btn">BUSCAR</label>
+        <button class="form-crear-btn" id="readAll-btn">Ver todos los estudiantes</button>
+      
+        <label for="readId-txt">Consultar por Nº de cuenta </label>
+        <input class="input-text" type="text" id="readId-txt" placeholder="# cuenta" />
+        <button class="form-crear-btn" id="readId-btn">Buscar</button> 
+      
+        <label for="readName-txt">Consultar por nombre </label>
+        <input class="input-text" type="text" id="readName-txt" placeholder="Nombre" />
+        <button class="form-crear-btn" id="readName-btn">Buscar</button> 
+      
+        <label for="readCareer-txt">Consultar por carrera </label>
+        <input class="input-text" type="text" id="readCareer-txt" placeholder="Carrera" />
+        <button class="form-crear-btn" id="readCareer-btn">Buscar</button> 
+      
+    </form>
+
+
+    <form class="form-div right-half">
+      <h1>Crear Expediente</h1>
+
+      <!-- <label for="id">Id:</label>
+      <input class="input-text" type="number" id="id" placeholder="# Cuenta" /> -->
+      
+      <label for="name">Nombre:</label>
+      <input class="input-text" type="text" id="name" placeholder="Nombre" />
+      
+      <label for="date">Fecha nacimiento:</label> 
+      <input class="input-text" type="date" id="date" placeholder="Fecha" />
+
+      <label for="age">Edad:</label> 
+      <input class="input-text" type="number" id="age" placeholder="Edad" />
+
+      <label for="email">Correo electronico:</label> 
+      <input class="input-text" type="text" id="email" placeholder="Correo electronico" />
+
+      <label for="phone">Telefono:</label> 
+      <input class="input-text" type="text" id="phone" placeholder="Telefono" />
+
+      <label for="country">Nacionalidad:</label> 
+      <input class="input-text" type="text" id="country" placeholder="Nacionalidad" />
+
+      <label for="career">Carrera:</label> 
+      <input class="input-text" type="text" id="career" placeholder="Carrera" />
+
+      <button class="form-crear-btn" id="createStudent-btn">Agregar estudiante</button>
+    </form> 
+
+  </div>
 
   <script>
     (async () => {
@@ -62,33 +93,23 @@
       const dom = setupDOMBindings();
 
       const contract = {
-        //getEstudiantes: async () => await view(CONTRACT_ID, 'getEstudiantes'),
-        helloWorld: async () => await view(CONTRACT_ID, 'getEstudiantes'),
-        readKey: async () => await view(CONTRACT_ID, 'read', { key: dom.txtReadKey.value }),
-        writeKey: async () => await change(CONTRACT_ID, 'setEstudiante', { nombre: "Kevin Estrada", fechaNacimiento: "2 de junio de 1997", edad: 24, email: "kevin@gmail.com", telefono: "6691017155", nacionalidad: "peru", carrera: "animacion" }, typeof gas !== 'undefined' ? gas : null),
-        //writeKey: async () => await change(CONTRACT_ID, 'write', { key: dom.txtWriteKey.value, value: dom.txtWriteValue.value }, typeof gas !== 'undefined' ? gas : null)
-        
-        addStudent: async () => await change(CONTRACT_ID, 'setEstudiante', { nombre: "Maria Estrada", fechaNacimiento: "2 de junio de 1997", edad: 24, email: "maria@gmail.com", telefono: "6691017155", nacionalidad: "mexico", carrera: "psicologia" }, typeof gas !== 'undefined' ? gas : null),
-        studentList: async () => await view(CONTRACT_ID, 'getEstudiantes'),
-        getStudent: async () => await view(CONTRACT_ID, 'getEstudiante', { id: dom.txtgetByid.value }),
-        getByName: async () => await view(CONTRACT_ID, 'getEstudiantesByName', { nombre: dom.txtgetByName.value }),
-        getByCareer: async () => await view(CONTRACT_ID, 'getEstudianteByCareer', { carrera: dom.txtgetByCareer.value }),
+        createStudent: async () => await change(CONTRACT_ID, 'setEstudiante', { nombre: dom.txtName.value, fechaNacimiento: dom.txtDate.value, edad: dom.txtAge.value, email: dom.txtEmail.value, telefono: dom.txtPhone.value, nacionalidad: dom.txtCountry.value, carrera: dom.txtCareer.value }, typeof gas !== 'undefined' ? gas : null),
+        getAll: async () => await view(CONTRACT_ID, 'getEstudiantes'),
+        getById: async () => await view(CONTRACT_ID, 'getEstudiante', { id: dom.txtGetByid.value }),
+        getByName: async () => await view(CONTRACT_ID, 'getEstudiantesByName', { nombre: dom.txtGetByName.value }),
+        getByCareer: async () => await view(CONTRACT_ID, 'getEstudianteByCareer', { carrera: dom.txtGetByCareer.value }),
       };
 
       if (wallet.isSignedIn()) {
         console.log("IS LOGGED IN");
         const accountId = wallet.getAccountId();
-        //dom.btnHello.addEventListener('click', contract.getEstudiantes);
-        dom.btnHello.addEventListener('click', contract.helloWorld);
-        dom.btnRead.addEventListener('click', contract.readKey);
-        dom.btnWrite.addEventListener('click', contract.writeKey);
 
-        dom.studentList.addEventListener('click', contract.studentList);
-        dom.getById.addEventListener('click', contract.getStudent);
-        dom.getByName.addEventListener('click', contract.getByName);
-        dom.getByCareer.addEventListener('click', contract.getByCareer);
+        dom.btnCreateStudent.addEventListener('click', contract.createStudent);
+        dom.btnGetAll.addEventListener('click', contract.getAll);
+        dom.btnGetById.addEventListener('click', contract.getById);
+        dom.btnGetByName.addEventListener('click', contract.getByName);
+        dom.btnGetByCareer.addEventListener('click', contract.getByCareer);
         
-        dom.addStudent.addEventListener('click', contract.addStudent);
 
       }
 
@@ -126,21 +147,32 @@
 
       function setupDOMBindings() {
         return {
-          btnHello: document.querySelector('#hello'),
-          btnRead: document.querySelector('#read'),
-          txtReadKey: document.querySelector('#read-key'),
-          btnWrite: document.querySelector('#write'),
-          txtWriteKey: document.querySelector('#write-key'),
-          txtWriteValue: document.querySelector('#write-value'),
+          // Nuevo estudiante
+          btnCreateStudent: document.querySelector('createStudent-btn'),
+          txtName: document.querySelector('name'),
+          txtDate: document.querySelector('date'),
+          txtAge: document.querySelector('age'),
+          txtEmail: document.querySelector('email'),
+          txtPhone: document.querySelector('phone'),
+          txtCountry: document.querySelector('country'),
+          txtCareer: document.querySelector('career'),
+          
 
-          addStudent: document.querySelector('#addStudent'),
-          studentList: document.querySelector('#studentList'),
-          getByName: document.querySelector('#readName'),
-          getById: document.querySelector('#readId'),
-          getByCareer: document.querySelector('#readCareer'),
-          txtgetByName: document.querySelector('#read-name'),
-          txtgetByCareer: document.querySelector('#read-career'),
-          txtgetByid: document.querySelector('#read-id'),
+          // Mostrar estudiantes
+          btnGetAll: document.querySelector('#readAll-btn'),
+
+          //Mostrar por id o numero de cuente
+          btnGetById: document.querySelector('#readId-btn'),
+          txtGetByid: document.querySelector('#readId-txt'),
+
+          //Mostrar por nombre
+          btnGetByName: document.querySelector('#readName-btn'),
+          txtGetByName: document.querySelector('#readName-txt'),
+
+          //Mostrar por carrera
+          btnGetByCareer: document.querySelector('#readCareer-btn'),
+          txtGetByCareer: document.querySelector('#readCareer-txt'),
+          
         };
       }
 
