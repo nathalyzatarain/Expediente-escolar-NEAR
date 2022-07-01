@@ -104,17 +104,17 @@ near dev-deploy build/debug/contrato.wasm
 
 > _Guarda la información de un estudiante en la blockchain_
 
-| Parametros                                 | Descripcion                                                                          |
-| ------------------------------------- | ------------------------------------------------------------------------------------ |
-| `nombre`                        | _Nombre del alumno_ |
-| `fechaNacimiento` | _Fecha de nacimiento del alumno_            |
-| `contract`                          | _Account id del contrato que estas llamando_                                      |
-| `edad`                            | _Edad del alumno_          |
-| `email`                            | _Cuenta de correo electronico del alumno_                   |
-| `telefono`                            | _Numero de telefono del alumno_                  |
-| `nacionalidad`                            | _País de nacimiento del alumno_                  |
-| `carrera`                            | _Carrera a la que ingresa el alumno
-_                  |
+| Parametros          | Descripcion                                    |
+| ------------------- | ---------------------------------------------- |
+| `nombre`          | _Nombre del alumno_                          |
+| `fechaNacimiento` | _Fecha de nacimiento del alumno_             |
+| `contract`        | _Account id del contrato que estas llamando_ |
+| `edad`            | _Edad del alumno_                            |
+| `email`           | _Cuenta de correo electronico del alumno_    |
+| `telefono`        | _Numero de telefono del alumno_              |
+| `nacionalidad`    | _País de nacimiento del alumno_             |
+| `carrera`         | _Carrera a la que ingresa el alumno            |
+| _                   |                                                |
 
 Ejemplo de registro:
 
@@ -131,7 +131,6 @@ Ejemplo de registro:
 
 ```
 
-
 ## `/getEstudiantes`
 
 > _Muestra todos los estudiantes que han sido registrados._
@@ -141,33 +140,33 @@ Ejemplo de registro:
 
 > _Muestra un estudiante por id o número de cuenta._
 
-| Parametros                            | Descripción                                                                                                           |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `id`                     | _Número de id a buscar_              |
-         
+| Parametros | Descripción               |
+| ---------- | -------------------------- |
+| `id`     | _Número de id a buscar_ |
+
 ## `/getEstudianteByName`
 
 > _Muestra un listado de estudiantes filtrado por nombre._
 
-| Parametros                            | Descripción                                                                                                           |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `nombre`                     | _Nombre del alumno a buscar_   
+| Parametros | Descripción                   |
+| ---------- | ------------------------------ |
+| `nombre` | _Nombre del alumno a buscar_ |
 
 ## `/getEstudianteByCareer`
 
 > _Muestra un listado de estudiantes filtrado por carrera._
 
-| Parametros                            | Descripción                                                                                                           |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `carrera`                     | _Carrera por la que se quiera buscar a los estudiantes_
+| Parametros  | Descripción                                              |
+| ----------- | --------------------------------------------------------- |
+| `carrera` | _Carrera por la que se quiera buscar a los estudiantes_ |
 
 ## `/deleteEstudiante`
 
 > _Elimina un estudiante del listado guardado en la blockchain._
 
-| Parametros                            | Descripción                                                                                                           |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `id`                     | _Id del alumno a elimnar_
+| Parametros | Descripción                |
+| ---------- | --------------------------- |
+| `id`     | _Id del alumno a elimnar_ |
 
 ## Pruebas unitarias
 
@@ -182,3 +181,10 @@ import * ascontratofrom"../assembly";
 3- en la carpeta del archivo ejecutar el comando:
 
 * npm run test
+
+
+## Mockups
+
+![1656708048547](image/README/1656708048547.png)
+
+![1656708068314](image/README/1656708068314.png)
