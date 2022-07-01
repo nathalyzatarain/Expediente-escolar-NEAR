@@ -1,94 +1,184 @@
 # Expediente-escolar-NEAR
-Creación del expediente de un alumno en la blockchain basado en el protocolo near mediante un contrato inteligente, y también se podrá consultar la información . Esto permitirá llevar el control de la información general de los alumnos de forma permanente y de fácil acceso.
-# AssemblyScript Starter
 
-Esta es una plantilla que puedes usar como punto de inicio para tu proyecto.
+Creación de un expediente académico digital de un alumno en la blockchain basado en el protocolo near mediante un contrato inteligente,donde también se podrá consultar la información por nombre y por carrera. Esto permitirá llevar el control de los datos generales de los alumnos de forma permanente y de fácil acceso.
+
+# Justificación
+
+Para una universidad es importante llevar un expediente de todos los alumnos, tener esta información guardada en el blockchain ayudaría a que los expedientes de los alumnos se guardarán de manera más rápida, de fácil acceso y de manera más permanente.
+
+El expediente debe contener la información de de la institución que lo emite, junto con la fecha de ingreso y la información general del estudiante, como su nombre, teléfono, fecha de nacimiento, su código o número de cuenta entres otros datos.
+
+También incluirá los resultados de la carga académica, anexo de documentos personales y registro de pagos.
 
 ## Contenido
 
 Este repositorio contiene un contrato inteligente con los siguientes métodos:
-### Escritura:
-* `setParticipante`
-* `setCertificado`
-### Lectura:
-* `getParticipante`
-* `getParticipantes`
 
-El contrato se encuentra previamente desplegado en la cuenta `as.ncdsamples.testnet`. Puedes hacer llamadas al mismo de la siguiente manera:
+### Escritura:
+
+* `setEstudiante`
+* `deleteEstudiante`
+
+### Lectura:
+
+* `getEstudiantes`
+* `getEstudiante`
+* `getEstudiantesByName`
+* `getEstudianteByCareer`
+
+El contrato se encuentra previamente desplegado en la cuenta `frankbizopps.testnet`.
+
+Las llamadas se realizaran de la siguiente manera:
+
+Lectura:
 
 ```sh
-near view as.ncdsamples.testnet getParticipantes
+near view frankbizopps.testnet getEstudiantes
 ```
 
-## Uso
-
-### Compilando y desplegando
-
-Lo primero que debemos hacer es instalar las dependencias necesarias para que el proyecto funcione.
+Escritura:
 
 ```sh
+near call frankbizopps.testnet deleteEstudiante '{"nombre":"Aranxa Zatarain"}'
+```
+
+## Descripción general
+
+| Metodo                                            | Descripcion                                                   |  |
+| ------------------------------------------------- | ------------------------------------------------------------- | - |
+| [`/setEstudiante`](#setEstudiante)                 | Guarda la información de un estudiante en la blockchain.     |  |
+| [`/getEstudiantes`](#getEstudiantes)               | Muestra la lista de estudiantes almacenados en la blockchain. |  |
+| [`/getEstudiante`](#getEstudiante)                 | Muestra un estudiante por id o número de cuenta.             |  |
+| [`/getEstudiantesByName`](#getEstudiantesByName)   | Muestra un listado de estudiantes filtrado por nombre.        |  |
+| [`/getEstudianteByCareer`](#getEstudianteByCareer) | Muestra un listado de estudiantes filtrado por carrera.       |  |
+| [`//deleteEstudiante`](#deleteEstudiante)          | Elimina un estudiante del listado guardado en la blockchain.  |  |
+
+---
+
+## Requisitos
+
+- [Cuenta NEAR](https://docs.near.org/docs/develop/basics/create-account)
+- [Node.js](https://nodejs.org/en/download/package-manager/)
+- [npm](https://www.npmjs.com/get-npm) o [Yarn](https://yarnpkg.com/getting-started/install)
+- NEAR CLI
+- Cuenta Near
+- Cuenta Near testnet
+
+## Configuración inicial
+
+1. Clonar repositorio
+
+```bash
+git clone https://github.com/nathalyzatarain/Expediente-escolar-NEAR.git
+```
+
+2. Instalar dependencias
+
+```bash
 npm install
 ```
 
-ó
+## Ejecutar contrato inteligente
 
-```sh
-yarn install
+1. Iniciar sesión en near cli
+
+```bash
+near login
 ```
 
-Una vez hecho esto, podemos compilar el código.
+2. Generar build
 
-```sh
+```bash
 npm run build
 ```
 
-ó
+3. Deployear contrato
 
-```sh
-yarn build
+```bash
+near dev-deploy build/debug/contrato.wasm
 ```
 
-El contrato compilado en WebAssembly se guarda en la carpeta `AssemblyScript/build/release/`. Ahora solo es necesario desplegarlo en una cuenta de desarrollo.
+## Instrucciones de uso de los metodos
 
-```sh
-near dev-deploy build/release/contrato.wasm
+## `/setEstudiante`
+
+> _Guarda la información de un estudiante en la blockchain_
+
+| Parametros                                 | Descripcion                                                                          |
+| ------------------------------------- | ------------------------------------------------------------------------------------ |
+| `nombre`                        | _Nombre del alumno_ |
+| `fechaNacimiento` | _Fecha de nacimiento del alumno_            |
+| `contract`                          | _Account id del contrato que estas llamando_                                      |
+| `edad`                            | _Edad del alumno_          |
+| `email`                            | _Cuenta de correo electronico del alumno_                   |
+| `telefono`                            | _Numero de telefono del alumno_                  |
+| `nacionalidad`                            | _País de nacimiento del alumno_                  |
+| `carrera`                            | _Carrera a la que ingresa el alumno
+_                  |
+
+Ejemplo de registro:
+
+```json
+{
+  "nombre": "Maria Estrada",
+  "fechaNacimiento": "2 de junio de 1997",
+  "edad": 24,
+  "email": "maria@gmail.com",
+  "telefono": "6691017155",
+  "nacionalidad": "mexico",
+  "carrera": "psicologia"
+}
+
 ```
 
-### Usando variables de entorno
 
-Una vez compilado y desplegado tu proyecto, vamos a requerir identificar la cuenta neardev. Esta la puedes encontrar en el archivo `AssemblyScript/neardev/neardev`. Podemos almacenar este contrato en una variable de entorno ejecutando lo siguiente en la consola, y sustituyendo por tu cuenta de desarrollo:
+## `/getEstudiantes`
 
-```sh
-export CONTRATO=dev-0000000000000-000000000
+> _Muestra todos los estudiantes que han sido registrados._
+> _Sin parametros._
+
+## `/getEstudiante`
+
+> _Muestra un estudiante por id o número de cuenta._
+
+| Parametros                            | Descripción                                                                                                           |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `id`                     | _Número de id a buscar_              |
+         
+## `/getEstudianteByName`
+
+> _Muestra un listado de estudiantes filtrado por nombre._
+
+| Parametros                            | Descripción                                                                                                           |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `nombre`                     | _Nombre del alumno a buscar_   
+
+## `/getEstudianteByCareer`
+
+> _Muestra un listado de estudiantes filtrado por carrera._
+
+| Parametros                            | Descripción                                                                                                           |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `carrera`                     | _Carrera por la que se quiera buscar a los estudiantes_
+
+## `/deleteEstudiante`
+
+> _Elimina un estudiante del listado guardado en la blockchain._
+
+| Parametros                            | Descripción                                                                                                           |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `id`                     | _Id del alumno a elimnar_
+
+## Pruebas unitarias
+
+1- en el archivo index.unit.spec.ts es  importar todo el contenido de la carpeta assembly
+
+```
+import * ascontratofrom"../assembly";
 ```
 
-Haciendo esto, podemos comprobar que la variable `CONTRATO` tiene almacenada nuestra cuenta dev.
+2- por cada método que queramos probar creamos una función ***describe*** y le ponemos los parámetros que queramos revisar
 
-```sh
-echo $CONTRATO
-```
+3- en la carpeta del archivo ejecutar el comando:
 
-### Métodos
-
-Lo primero que debemos hacer es registrar al menos un usuario en el contrato. Para esto utilizamos el método `setParticipante`. Este método requiere que se pague 1 NEAR para poder ser ejecutado. El método registra a la persona que lo está ejecutando como participante.
-
-```sh
-near call $CONTRATO setParticipante '{"nombre":"Nombre Participante","edad":18}' --accountId tucuenta.testnet --amount 1
-```
-
-Ahora que tenemos al menos 1 participante, podemos utilizar los métodos de lectura. `getParticipante` nos traerá la información específica de un participante dependiendo la cuenta que le enviemos como parámetro. Por otro lado, `getParticipantes` nos trae la lista de todos los participantes registrados.
-
-```sh
-near view $CONTRATO getParticipante '{"cuenta":"cuenta.testnet"}'
-```
-
-```sh
-near view $CONTRATO getParticipantes
-```
-
-Por último, si queremos marcar como certificado a uno de los participantes registrados, podemos hacer uso del método `setCertificado`. Este método tiene una restricción en la que, si tu cuenta no es `aklassen.testnet` especificamente no te permitirá ejecutarlo. Esta es una forma de agregar una restricción a cuentas específicas. Puedes modificar esta cuenta en el código del contrato. Además, el método transfiere una compensación de 5 NEAR al participante por haber logrado su certificación.
-
-```sh
-near call $CONTRATO setCertificado '{"cuenta":"cuenta.testnet"}' --accountId cuenta.testnet
-```
-
+* npm run test

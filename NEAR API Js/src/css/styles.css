@@ -110,21 +110,6 @@ body {
     text-align: justify;
   }
 
-  /* .container { 
-    overflow:auto; 
-    width: 100%; 
-  } 
-  
-  .buscadores-box, .form-div { 
-    width: 40%; 
-    
-    padding: 1em; 
-    background: white; 
-  } 
-  
-  .buscadores-box  { float:left;  }
-  .form-div { float:right; }  */
-
 
   /*DIVISOR DE FLEX */
 

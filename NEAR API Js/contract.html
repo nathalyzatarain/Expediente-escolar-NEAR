@@ -22,7 +22,7 @@
 
   <div class="container-flex">
   
-    <form class="form-div left-half">
+    <form class="form-div left-half" onsubmit="return false">
         <h1>Consultas</h1>
 
         <label style="visibility: hidden;" for="readAll-btn">BUSCAR</label>
@@ -39,11 +39,10 @@
         <label for="readCareer-txt">Consultar por carrera </label>
         <input class="input-text" type="text" id="readCareer-txt" placeholder="Carrera" />
         <button class="form-crear-btn" id="readCareer-btn">Buscar</button> 
-      
     </form>
 
 
-    <form class="form-div right-half">
+    <form class="form-div right-half" onsubmit="return false">
       <h1>Crear Expediente</h1>
 
       <!-- <label for="id">Id:</label>
@@ -75,17 +74,16 @@
 
   </div>
 
+</body>
+
   <script>
     (async () => {
       const { connect, keyStores, WalletConnection } = nearApi;
 
       const NETWORK = 'testnet';
 
-      const CONTRACT_ID = 'dev-1656454287963-33635598317214';
-
-      //const CONTRACT_ID = 'dev-1656452857908-99001344275282';
-      //dev-1656452857908-99001344275282
-      // const gas = new BN('1000'); // uncomment this line to see an error re: "Exceeded the prepaid gas"
+      //const CONTRACT_ID = 'dev-1656622291965-89068125120622';
+      const CONTRACT_ID = 'frankbizopps.testnet';
 
       const near = await connect(config());
       const wallet = new WalletConnection(near, `${NETWORK}-custom-prefix`);
@@ -93,7 +91,7 @@
       const dom = setupDOMBindings();
 
       const contract = {
-        createStudent: async () => await change(CONTRACT_ID, 'setEstudiante', { nombre: dom.txtName.value, fechaNacimiento: dom.txtDate.value, edad: dom.txtAge.value, email: dom.txtEmail.value, telefono: dom.txtPhone.value, nacionalidad: dom.txtCountry.value, carrera: dom.txtCareer.value }, typeof gas !== 'undefined' ? gas : null),
+        createStudent: async () => await change(CONTRACT_ID, 'setEstudiante', { nombre: document.getElementById("name").value, fechaNacimiento: document.getElementById("date").value, edad: parseInt(document.getElementById("age").value), email: document.getElementById("email").value, telefono: document.getElementById("phone").value, nacionalidad: document.getElementById("country").value, carrera: document.getElementById("career").value }, typeof gas !== 'undefined' ? gas : null),
         getAll: async () => await view(CONTRACT_ID, 'getEstudiantes'),
         getById: async () => await view(CONTRACT_ID, 'getEstudiante', { id: dom.txtGetByid.value }),
         getByName: async () => await view(CONTRACT_ID, 'getEstudiantesByName', { nombre: dom.txtGetByName.value }),
@@ -101,10 +99,9 @@
       };
 
       if (wallet.isSignedIn()) {
-        console.log("IS LOGGED IN");
         const accountId = wallet.getAccountId();
 
-        dom.btnCreateStudent.addEventListener('click', contract.createStudent);
+        document.getElementById("createStudent-btn").addEventListener('click', contract.createStudent);
         dom.btnGetAll.addEventListener('click', contract.getAll);
         dom.btnGetById.addEventListener('click', contract.getById);
         dom.btnGetByName.addEventListener('click', contract.getByName);
@@ -129,10 +126,11 @@
       }
 
       async function view(contract, method, args) {
-        console.log("MANDO A LLAMAR LA VIEW");
         const response = await wallet.account().viewFunction(contract, method, args);
+      
         console.log(response);
       }
+
 
       function config() {
         return {
@@ -148,7 +146,6 @@
       function setupDOMBindings() {
         return {
           // Nuevo estudiante
-          btnCreateStudent: document.querySelector('createStudent-btn'),
           txtName: document.querySelector('name'),
           txtDate: document.querySelector('date'),
           txtAge: document.querySelector('age'),
@@ -201,6 +198,6 @@
       }
     })();
   </script>
-</body>
+
 
 </html>

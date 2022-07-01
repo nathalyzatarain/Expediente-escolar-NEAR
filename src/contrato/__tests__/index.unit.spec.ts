@@ -1,31 +1,39 @@
 import { ONE_NEAR } from "../../utils";
 import * as contrato from "../assembly";
-import { participantes } from "../assembly/index"
+import { estudiantes } from "../assembly/data";
 import { VMContext } from "near-sdk-as";
 
-const NOMBRE = "Participante";
+const NOMBRE = "Frank Estrada";
 const EDAD = 18;
+const FECHA_NACIMIENTO = "13 03 1994" 
+const EMAIL = "frank@grupobizopps.com"
+const TELEFONO = "6691017155"
+const NACIONALIDAD = "mexico"
+const CARRERA = "informatica"
 
 const setContext = (): void => {
   //Variables del contexto
   VMContext.setAttached_deposit(ONE_NEAR);
-  VMContext.setSigner_account_id("participante");
+  VMContext.setSigner_account_id("estudiante");
 };
 
-describe("SetParticipante", () => {
-  it("Registra un participante con sus respectivos datos.", () => {
+describe("SetEstudiante", () => {
+  it("Registra un estudiante con sus respectivos datos.", () => {
 
     setContext();
 
-    contrato.setParticipante(NOMBRE, EDAD);
+    contrato.setEstudiante(NOMBRE,FECHA_NACIMIENTO, EDAD,EMAIL,TELEFONO,NACIONALIDAD,CARRERA);
 
-    const p = participantes.get("participante");
+    const e = estudiantes.get("estudiante");
 
-    if (p) {
-      expect(p.cuenta).toBe("participante")
-      expect(p.nombre).toBe(NOMBRE)
-      expect(p.edad).toBe(EDAD)
-      expect(p.certificado).toBe(false)
+    if (e) {
+      expect(e.nombre).toBe(NOMBRE);
+      expect(e.fechaNacimiento).toBe(FECHA_NACIMIENTO);
+      expect(e.edad).toBe(EDAD);
+      expect(e.email).toBe(EMAIL);
+      expect(e.telefono).toBe(TELEFONO);
+      expect(e.nacionalidad).toBe(NACIONALIDAD);
+      expect(e.carrera).toBe(CARRERA);
     }
 
   });
@@ -33,20 +41,15 @@ describe("SetParticipante", () => {
   it("Requiere que la edad sea mayor a 0.", () => {
     setContext();
     expect(() => {
-      contrato.setParticipante(NOMBRE, 0);
+      contrato.setEstudiante(NOMBRE,FECHA_NACIMIENTO, 0,EMAIL,TELEFONO,NACIONALIDAD,CARRERA);
     }).toThrow("Edad inválida.");
   })
 
-  it("Requiere que el nombre tenga 3 o más caractéres.", () => {
+  
+  it("Requiere que el nombre sea mayor a 3 caracteres.", () => {
     setContext();
     expect(() => {
-      contrato.setParticipante("p", EDAD);
-    }).toThrow("El nombre debe contener 3 o más caractéres.");
+      contrato.setEstudiante("p",FECHA_NACIMIENTO,EDAD,EMAIL,TELEFONO,NACIONALIDAD,CARRERA);
+    }).toThrow("Nombre invalido inválida.");
   })
-
-  it("Requiere que se haga un depósito de al menos 1 NEAR.", () => {
-    expect(() => {
-      contrato.setParticipante(NOMBRE, EDAD);
-    }).toThrow("Debes de pagar 1 NEAR para registrarte.");
-  })
-})
+});

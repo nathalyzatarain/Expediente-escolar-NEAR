@@ -1,4 +1,4 @@
-import { logging, context, u128, ContractPromiseBatch } from 'near-sdk-as'
+import { logging} from 'near-sdk-as'
 import { Estudiante, estudiantes } from './data';
 
 export function setEstudiante(nombre: string, fechaNacimiento: string, edad: u32, email: string, telefono: string, nacionalidad: string, carrera: string): void {
@@ -7,10 +7,8 @@ export function setEstudiante(nombre: string, fechaNacimiento: string, edad: u32
   id += 1;
 
   //Validaciones
-  //var exprEmail : any = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   assert(edad > 0, "Edad inválida.");
   assert(nombre.length >= 3, "El nombre debe contener 3 o más caractéres.");
-  //assert(exprEmail.test(email),"El correo electronico es invalido");
 
  let estudiante = new Estudiante(id.toString(), nombre.toLowerCase(), fechaNacimiento.toLowerCase(), edad, email.toLowerCase(), telefono.toLowerCase(), nacionalidad.toLowerCase(), carrera.toLowerCase());
  estudiantes.set(id.toString(), estudiante);
@@ -63,6 +61,10 @@ export function getEstudianteByCareer(carrera: string ):  Estudiante[] {
 
   return listEstudiantesCareer;
   
+}
+
+export function deleteEstudiante(id: string): void {
+  estudiantes.delete(id);
 }
 
 
