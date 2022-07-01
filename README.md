@@ -39,7 +39,7 @@ near view frankbizopps.testnet getEstudiantes
 Escritura:
 
 ```sh
-near call frankbizopps.testnet deleteEstudiante '{"nombre":"Aranxa Zatarain"}'
+near call frankbizopps.testnet deleteEstudiante '{"id":"1"}'
 ```
 
 ## Descripción general
